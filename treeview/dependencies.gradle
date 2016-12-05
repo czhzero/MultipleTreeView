@@ -1,0 +1,25 @@
+project.ext {
+
+    bintrayRepo = 'maven'
+    bintrayName = 'treeview'
+
+    publishedGroupId = 'org.chen.treeview'
+    libraryName = 'treeview'
+    artifact = 'treeview'
+
+    libraryDescription = 'Android Multiple TreeView'
+
+    siteUrl = 'https://github.com/czhzero/MultipleTreeView'
+    gitUrl = 'https://github.com/czhzero/MultipleTreeView.git'
+
+    libraryVersion = '1.0.1'
+
+    developerId = 'czhzero'
+    developerName = 'chenzhaohua'
+    developerEmail = 'czhpxl007@163.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+}

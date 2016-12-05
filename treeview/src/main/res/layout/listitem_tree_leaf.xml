@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/shape_circle_grey" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_icon"
+        android:paddingBottom="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_medium"
+        android:textColor="#201F1F"
+        android:textSize="15dp"
+        tools:text="节点名称" />
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_name"
+        android:paddingBottom="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_medium"
+        android:textColor="#8b8b8b"
+        android:textSize="12dp"
+        tools:text="描述" />
+
+
+    <ImageView
+        android:id="@+id/iv_checkbox"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:src="@drawable/ic_checked" />
+
+    <View
+        android:id="@+id/view_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/iv_icon"
+        android:background="#e6e9ec" />
+
+
+
+</RelativeLayout>
