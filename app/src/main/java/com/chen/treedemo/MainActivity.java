@@ -34,7 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
                 StringBuffer buffer = new StringBuffer();
                 ArrayList<TestModel> list = new ArrayList<>();
-                tree_view.getSelectedItems(list);
+
+                List<Object> resultList =  tree_view.getSelectedItems();
+
+                for(Object b : resultList) {
+                    list.add((TestModel) b);
+                }
+
+
                 for (TestModel model : list) {
                     buffer.append(model.name + " ");
                 }

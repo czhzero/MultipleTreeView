@@ -66,16 +66,16 @@ compile 'org.chen.treeview:treeview:1.0.1'
 //测试数据模型, 必须添加@NodeId ,  @NodeName 两个注解字段
 public class TestModel {
 	 //通过注解的方式，进行model转换
-    @NodeId
-    public String id;       //必填字段
-    @NodeName
-    public String name;     //必填字段
-    @NodeLabel
+    @NodeId                 //必填字段
+    public String id;
+    @NodeName               //必填字段
+    public String name;
+    @NodeLabel              //可选字段
     public String label;
-    @NodePid
+    @NodePid                //必填字段
     public String parentId;
     @NodeChild
-    public List<TestModel> child;
+    public List<TestModel> child;  //非叶子节点必填字段
 
     public String other1;
     public String other2;
