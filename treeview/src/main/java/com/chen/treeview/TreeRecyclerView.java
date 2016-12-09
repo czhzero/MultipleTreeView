@@ -85,13 +85,6 @@ public class TreeRecyclerView extends FrameLayout {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /**
-     * 设置点击事件, MODE_CLICK_SELECT模式下需要使用
-     */
-    public void setOnItemClickListener(OnNodeItemClickListener listener) {
-        mAdapter.setOnItemClickListener(listener);
-    }
-
 
     /**
      * 获取选中的内容
@@ -99,10 +92,21 @@ public class TreeRecyclerView extends FrameLayout {
      * @param <T>
      * @return
      */
-    public <T> void getSelectedItems(List<T> list) {
-        mAdapter.getSelectedItems(list);
+    public <T> List<T> getSelectedItems() {
+        return mAdapter.getSelectedItems();
     }
 
+
+
+    /**
+     * 设置点击事件, MODE_CLICK_SELECT模式下需要使用
+     */
+    @Deprecated
+    public void setOnItemClickListener(OnNodeItemClickListener listener) {
+        mAdapter.setOnItemClickListener(listener);
+    }
+
+    
 
     /**
      * 设置折叠控件的选择模式

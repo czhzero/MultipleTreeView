@@ -105,7 +105,9 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
      *
      * @return
      */
-    public <T> void getSelectedItems(List<T> list) {
+    public List<T> getSelectedItems() {
+
+        List<T> resultDataList = new ArrayList<>();
 
         List<Node<T>> resultNodeList = new ArrayList<>();
 
@@ -114,8 +116,10 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
         }
 
         for (Node<T> item : resultNodeList) {
-            list.add(item.getContent());
+            resultDataList.add(item.getContent());
         }
+
+        return resultDataList;
 
     }
 
