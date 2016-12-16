@@ -73,13 +73,9 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
         if (nodes != null && !nodes.isEmpty()) {
             mRootNodes.clear();
             mRootNodes.addAll(nodes);
+            rearrangeVisibleNodes();
         }
 
-        for (Node<T> item : nodes) {
-            filterVisibleNodes(item);
-        }
-
-        notifyDataSetChanged();
     }
 
 
@@ -132,11 +128,11 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
             case Node.TREE_NODE:
                 view = LayoutInflater.from(mContext).inflate(
                         R.layout.listitem_tree_node, parent, false);
-                return new TreeNodeViewHolder<T>(view);
+                return new TreeNodeViewHolder(view);
             case Node.TREE_LEAF:
                 view = LayoutInflater.from(mContext).inflate(
                         R.layout.listitem_tree_leaf, parent, false);
-                return new TreeLeafViewHolder<T>(view);
+                return new TreeLeafViewHolder(view);
             default:
                 return null;
         }
@@ -146,16 +142,23 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
     @Override
     public void onBindViewHolder(TreeBaseViewHolder holder, int position) {
 
+        OnNodeCheckListener checkListener = mOnNodeCheckListener;
+
+        //点击模式，不可以选中
+        if (mSelectMode == TreeRecyclerView.MODE_CLICK_SELECT) {
+            checkListener = null;
+        }
+
         switch (getItemViewType(position)) {
             case Node.TREE_NODE:
-                TreeNodeViewHolder<T> nodeViewHolder = (TreeNodeViewHolder<T>) holder;
+                TreeNodeViewHolder nodeViewHolder = (TreeNodeViewHolder) holder;
                 nodeViewHolder.bindView(mVisibleNodes.get(position),
-                        position, mOnNodeSwitchListener, mOnNodeCheckListener);
+                        position, mOnNodeSwitchListener, checkListener);
                 break;
             case Node.TREE_LEAF:
-                TreeLeafViewHolder<T> leafViewHolder = (TreeLeafViewHolder<T>) holder;
+                TreeLeafViewHolder leafViewHolder = (TreeLeafViewHolder) holder;
                 leafViewHolder.bindView(mVisibleNodes.get(position),
-                        position, mOnNodeCheckListener);
+                        position, checkListener);
                 break;
             default:
                 break;

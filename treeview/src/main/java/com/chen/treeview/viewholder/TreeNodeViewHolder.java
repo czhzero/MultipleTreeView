@@ -18,7 +18,7 @@ import com.chen.treeview.model.Node;
 /**
  * Created by chenzhaohua on 16/11/25.
  */
-public class TreeNodeViewHolder<T> extends TreeBaseViewHolder {
+public class TreeNodeViewHolder extends TreeBaseViewHolder {
 
     private RelativeLayout rl_content;
     private ImageView iv_icon;
@@ -36,25 +36,20 @@ public class TreeNodeViewHolder<T> extends TreeBaseViewHolder {
         iv_checkbox = (ImageView) itemView.findViewById(R.id.iv_checkbox);
     }
 
-    public void bindView(final Node<T> node,
+    public void bindView(final Node node,
                          final int position,
                          final OnNodeSwitchListener onNodeSwitchListener,
                          final OnNodeCheckListener onNodeCheckListener) {
 
 
         //根据节点层级，进行缩进处理
-        RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)
-                rl_content.getLayoutParams();
-        params.leftMargin = mLevelMargin * node.getLevel();
-
-
-        rl_content.setLayoutParams(params);
+        setLevelMargin(rl_content, node.getLevel());
 
         //设置节点名称
-        tv_name.setText(node.getName());
+        setText(tv_name, node.getName());
 
         //设置节点描述
-        tv_label.setText(node.getLabel());
+        setText(tv_label, node.getLabel());
 
         //设置节点选中状态
         setChecked(iv_checkbox, node.isChecked());
@@ -63,6 +58,7 @@ public class TreeNodeViewHolder<T> extends TreeBaseViewHolder {
         setExpanded(iv_icon, node.isExpanded());
 
 
+        //设置展开与收缩事件
         iv_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +75,7 @@ public class TreeNodeViewHolder<T> extends TreeBaseViewHolder {
         });
 
 
+        //设置选中点击事件
         rl_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

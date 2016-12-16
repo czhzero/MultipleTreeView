@@ -59,11 +59,11 @@ public class TreeRecyclerView extends FrameLayout {
      *
      * public static class TestModel {
      *
-     * @NodeId public String id;                    //必填字段
-     * @NodeName public String name;                  //必填字段
+     * @NodeId public String id;                     //必填字段
+     * @NodeName public String name;                 //必填字段
      * @NodeLabel public String label;
-     * @NodePid public String parentId;              //父节点id
-     * @NodeChild public List<TestModel> child;        //child用来表示层级关系, child为空，则表示叶子节点
+     * @NodePid public String parentId;              //必填字段
+     * @NodeChild public List<TestModel> child;      //child用来表示层级关系, child为空，则表示叶子节点
      * ...
      * others
      * ...
@@ -101,8 +101,7 @@ public class TreeRecyclerView extends FrameLayout {
     /**
      * 设置点击事件, MODE_CLICK_SELECT模式下需要使用
      */
-    @Deprecated
-    public void setOnItemClickListener(OnNodeItemClickListener listener) {
+    public void setOnNodeItemClickListener(OnNodeItemClickListener listener) {
         mAdapter.setOnItemClickListener(listener);
     }
 
