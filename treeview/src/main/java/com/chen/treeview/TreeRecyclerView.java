@@ -74,7 +74,7 @@ public class TreeRecyclerView extends FrameLayout {
         ArrayList<Node<T>> nodeList = new ArrayList<>();
 
         try {
-            nodeList = NodeDataConverter.convertToNodeList(list);
+            nodeList = NodeDataConverter.convertToCascadedNodeList(list);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -96,6 +96,13 @@ public class TreeRecyclerView extends FrameLayout {
         return mAdapter.getSelectedItems();
     }
 
+
+    /**
+     * 清除已经选择的内容
+     */
+    public void clearSelectedItems(String ... nodeIds) {
+        mAdapter.clearSelectedItems(nodeIds);
+    }
 
 
     /**

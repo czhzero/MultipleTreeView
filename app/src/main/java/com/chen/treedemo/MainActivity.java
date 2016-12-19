@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         tree_view = (TreeRecyclerView) findViewById(R.id.tree_view);
-        tree_view.setData(generateList(), TreeRecyclerView.MODE_SINGLE_SELECT);
+        tree_view.setData(generateList(), TreeRecyclerView.MODE_MULTI_SELECT);
 
         tv_result = (TextView) findViewById(R.id.tv_result);
         btn_select = (Button) findViewById(R.id.btn_select);
@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
                     buffer.append(model.name + " ");
                 }
                 tv_result.setText(buffer.toString());
+
+                tree_view.clearSelectedItems();
+
+
             }
         });
 

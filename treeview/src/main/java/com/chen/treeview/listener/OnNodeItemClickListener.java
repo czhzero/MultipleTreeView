@@ -8,6 +8,8 @@ package com.chen.treeview.listener;
  */
 public interface OnNodeItemClickListener<T> {
     void onItemClick(T t);
+
+    void onPostItemClick();
 }
 
 

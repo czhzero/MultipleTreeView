@@ -56,10 +56,10 @@ class NodeDataConverter {
      * @param nodeId
      * @param isChecked
      * @param mode
-     * @param nodeList
+     * @param nodeList  必须是Visual node list
      * @param <T>
      */
-    public static <T> void checkNode(String nodeId, boolean isChecked, int mode, List<Node<T>> nodeList) {
+    public static <T> void checkNodeOnVisibleList(String nodeId, boolean isChecked, int mode, List<Node<T>> nodeList) {
 
         switch (mode) {
             //单选模式
@@ -106,6 +106,31 @@ class NodeDataConverter {
     }
 
 
+    /**
+     * 根据节点Id, 取消级联节点列表中节点的选中状态
+     * @param nodeIdList
+     * @param cascadedList
+     * @param <T>
+     */
+    public static <T> void uncheckNodeOnCascadedList(final List<String> nodeIdList,
+                                                     final List<Node<T>> cascadedList) {
+
+        for (Node<T> item : cascadedList) {
+
+            if (nodeIdList == null
+                    || nodeIdList.size() == 0
+                    || nodeIdList.contains(item.getId())) {
+                item.setChecked(false);
+            }
+
+            if (item.getChildren() != null) {
+                uncheckNodeOnCascadedList(nodeIdList, item.getChildren());
+            }
+
+        }
+    }
+
+
 
 
     /**
@@ -117,7 +142,7 @@ class NodeDataConverter {
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
-    public static <T> ArrayList<Node<T>> convertToNodeList(List<T> list) throws IllegalAccessException, IllegalArgumentException {
+    public static <T> ArrayList<Node<T>> convertToCascadedNodeList(List<T> list) throws IllegalAccessException, IllegalArgumentException {
 
 
         ArrayList<Node<T>> nodeList = new ArrayList<>();
@@ -147,10 +172,10 @@ class NodeDataConverter {
      * 根据id 选择Node
      *
      * @param id
-     * @param list
+     * @param list 必须是级联节点列表
      * @return
      */
-    public static <T> Node<T> filterNodeById(final String id, final List<Node<T>> list) {
+    public static <T> Node<T> filterNodeByIdOnCascadedList(final String id, final List<Node<T>> list) {
 
         for (Node<T> item : list) {
 
@@ -159,7 +184,7 @@ class NodeDataConverter {
             }
 
             if (item.getChildren() != null) {
-                Node<T> result = filterNodeById(id, item.getChildren());
+                Node<T> result = filterNodeByIdOnCascadedList(id, item.getChildren());
                 if (result != null) {
                     return result;
                 }
@@ -197,9 +222,11 @@ class NodeDataConverter {
     }
 
 
-
-
-
+    /**
+     * 递归取消父节点选择
+     * @param node
+     * @param <T>
+     */
     private static <T> void uncheckParentNode(Node<T> node) {
         //当前选择，则父已有的选择取消
         if (node.getParent() != null) {
@@ -208,7 +235,11 @@ class NodeDataConverter {
         }
     }
 
-
+    /**
+     * 递归取消孩子节点选择
+     * @param node
+     * @param <T>
+     */
     private static <T> void uncheckChildNode(Node<T> node) {
         //当前选择，则下面的子节点选择取消
         if (node.getChildren() != null) {

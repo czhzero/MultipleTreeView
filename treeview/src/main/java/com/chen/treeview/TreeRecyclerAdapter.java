@@ -15,6 +15,7 @@ import com.chen.treeview.viewholder.TreeLeafViewHolder;
 import com.chen.treeview.viewholder.TreeNodeViewHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,16 +28,15 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
     private int mSelectMode = TreeRecyclerView.MODE_SINGLE_SELECT;
 
     private OnNodeSwitchListener mOnNodeSwitchListener = new OnNodeSwitchListener() {
-
         @Override
         public void onExpand(Node node, int position) {
-            NodeDataConverter.expandNode(NodeDataConverter.filterNodeById(node.getId(), mRootNodes));
+            NodeDataConverter.expandNode(NodeDataConverter.filterNodeByIdOnCascadedList(node.getId(), mRootNodes));
             rearrangeVisibleNodes();
         }
 
         @Override
         public void onShrink(Node node, int position) {
-            NodeDataConverter.shrinkNode(NodeDataConverter.filterNodeById(node.getId(), mRootNodes));
+            NodeDataConverter.shrinkNode(NodeDataConverter.filterNodeByIdOnCascadedList(node.getId(), mRootNodes));
             rearrangeVisibleNodes();
         }
     };
@@ -45,13 +45,17 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
     private OnNodeCheckListener mOnNodeCheckListener = new OnNodeCheckListener() {
         @Override
         public void onCheck(boolean isChecked, int position, Node node) {
+
             if (mOnNodeItemClickListener != null) {
                 mOnNodeItemClickListener.onItemClick(node.getContent());
             }
 
-            NodeDataConverter.checkNode(node.getId(), isChecked, mSelectMode, mVisibleNodes);
+            NodeDataConverter.checkNodeOnVisibleList(node.getId(), isChecked, mSelectMode, mVisibleNodes);
             notifyDataSetChanged();
 
+            if (mOnNodeItemClickListener != null) {
+                mOnNodeItemClickListener.onPostItemClick();
+            }
         }
     };
 
@@ -116,6 +120,24 @@ class TreeRecyclerAdapter<T> extends RecyclerView.Adapter<TreeBaseViewHolder> {
         }
 
         return resultDataList;
+
+    }
+
+
+    /**
+     * 清除所有已经选择的内容
+     */
+    public void clearSelectedItems(String... nodeIds) {
+
+        ArrayList<String> nodeIdList = new ArrayList<>();
+
+        if (nodeIds != null && nodeIds.length > 0) {
+            nodeIdList = (ArrayList<String>) Arrays.asList(nodeIds);
+        }
+
+        NodeDataConverter.uncheckNodeOnCascadedList(nodeIdList, mRootNodes);
+
+        rearrangeVisibleNodes();
 
     }
 
